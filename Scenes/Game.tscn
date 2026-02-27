@@ -1,11 +1,39 @@
-[gd_scene load_steps=7 format=4 uid="uid://bkcrtsndkbsva"]
+[gd_scene load_steps=15 format=4 uid="uid://bkcrtsndkbsva"]
 
 [ext_resource type="Texture2D" uid="uid://72g56rfb3ecu" path="res://Assets/brackeys_platformer_assets/brackeys_platformer_assets/sprites/platforms.png" id="1_s6j3b"]
 [ext_resource type="Texture2D" uid="uid://bjidjiy26raf2" path="res://Assets/brackeys_platformer_assets/brackeys_platformer_assets/sprites/world_tileset.png" id="2_yifk0"]
 [ext_resource type="PackedScene" uid="uid://p8s7a85cdlxi" path="res://Scenes/player.tscn" id="3_iaio1"]
+[ext_resource type="PackedScene" uid="uid://b12cxnwgl7acm" path="res://Scenes/moving_platform.tscn" id="4_i8buk"]
+[ext_resource type="PackedScene" uid="uid://c2hyilkj27ssb" path="res://Scenes/coin.tscn" id="5_evvle"]
+[ext_resource type="PackedScene" uid="uid://bgw1j7ptf6stg" path="res://Scenes/kill_zone.tscn" id="6_gguyc"]
+[ext_resource type="PackedScene" uid="uid://ck7rffe0vh8ov" path="res://Scenes/enemy.tscn" id="7_f1rht"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kbndh"]
 texture = ExtResource("1_s6j3b")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 1.375, -8, 1.125)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 1.375, -8, 1.125)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j58h6"]
 texture = ExtResource("2_yifk0")
@@ -152,15 +180,74 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_kbndh")
 sources/1 = SubResource("TileSetAtlasSource_j58h6")
 
+[sub_resource type="Animation" id="Animation_7w2cv"]
+resource_name = "platform"
+length = 1.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(337, -76), Vector2(465, -76)]
+}
+
+[sub_resource type="Animation" id="Animation_hmnvw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(337, -76)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4q0b1"]
+_data = {
+"RESET": SubResource("Animation_hmnvw"),
+"platform": SubResource("Animation_7w2cv")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ivxwj"]
+size = Vector2(1007.5, 59)
+
 [node name="Game" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD7////AQAAAAAAAAD8////AQAAAAAAAAD9////AQAAAAAAAAD+////AQAAAAAAAAD/////AQAAAAAAAAAAAP//AQAAAAAAAAABAP//AQAAAAAAAAACAP//AQAAAAAAAAADAP//AQAAAAAAAAAEAP//AQAAAAAAAAAFAP//AQAAAAAAAAAGAP//AQAAAAAAAAAHAP//AQAAAAAAAAAFAP7/AQAAAAAAAAAGAP7/AQAAAAAAAAAHAP7/AQAAAAAAAAAIAP7/AQAAAAAAAAAIAP//AQAAAAAAAAAJAP//AQAAAAAAAAAJAP7/AQAAAAAAAAAJAP3/AQAAAAAAAAAKAP3/AQAAAAAAAAAKAPz/AQAAAAAAAAAKAP7/AQAAAAAAAAAKAP//AQAAAAAAAAALAP//AQAAAAAAAAALAP7/AQAAAAAAAAALAP3/AQAAAAAAAAALAPz/AQAAAAAAAAAMAPz/AQAAAAAAAAAMAP3/AQAAAAAAAAAMAP7/AQAAAAAAAAAMAP//AQAAAAAAAAA=")
+position = Vector2(-8, -12)
+tile_map_data = PackedByteArray("AAD7//v/AQAAAAAAAAD8//v/AQAAAAAAAAD8//z/AQAAAAAAAAD8//3/AQAAAAAAAAD8//7/AQAAAAAAAAD7//7/AQAAAAAAAAD7//3/AQAAAAAAAAD7//z/AQAAAAAAAAD7////AQAAAAAAAAD8////AQAAAAAAAAD9//z/AQAAAAAAAAD9//3/AQAAAAAAAAD9//7/AQAAAAAAAAD9////AQAAAAAAAAD+////AQAAAAAAAAD+//7/AQAAAAAAAAD+//3/AQAAAAAAAAD///3/AQAAAAAAAAD///7/AQAAAAAAAAD/////AQAAAAAAAAABAP3/AQAAAAAAAAACAP3/AQAAAAAAAAADAP3/AQAAAAAAAAAEAP3/AQAAAAAAAAAFAP3/AQAAAAAAAAAFAPz/AQAAAAAAAAAEAPz/AQAAAAAAAAAIAPz/AQAAAAAAAAAJAPz/AQAAAAAAAAAKAPz/AQAAAAAAAAALAPz/AQAAAAAAAAAMAPr/AQAAAAAAAAANAPr/AQAAAAAAAAAOAPr/AQAAAAAAAAAPAPr/AQAAAAAAAAASAPv/AQAAAAAAAAATAPv/AQAAAAAAAAATAP3/AQAAAAAAAAATAPz/AQAAAAAAAAASAPz/AQAAAAAAAAASAP3/AQAAAAAAAAASAP7/AQAAAAAAAAASAP//AQAAAAAAAAATAP//AQAAAAAAAAAUAP//AQAAAAAAAAAUAP7/AQAAAAAAAAATAP7/AQAAAAAAAAAVAP//AQAAAAAAAAAWAP//AQAAAAAAAAAXAP//AQAAAAAAAAAYAP//AQAAAAAAAAAZAP//AQAAAAAAAAAaAP//AQAAAAAAAAAbAP//AQAAAAAAAAAcAP//AQAAAAAAAAAdAP//AQAAAAAAAAAeAP//AQAAAAAAAAAeAP7/AQAAAAAAAAAfAP7/AQAAAAAAAAAfAP//AQAAAAAAAAAfAP3/AQAAAAAAAAAfAPz/AQAAAAAAAAAfAPv/AQAAAAAAAAAiAPj/AQAGAAAAAAAjAPj/AQAGAAAAAAAkAPj/AQAGAAAAAAAlAPj/AQAGAAAAAAAmAPj/AQAGAAAAAAAnAPj/AQAGAAAAAAAoAPj/AQAGAAAAAAApAPj/AQAGAAAAAAAqAPj/AQAGAAAAAAArAPj/AQAGAAAAAAAsAPj/AQAGAAAAAAAtAPj/AQAGAAAAAAAtAPf/AQAGAAAAAAAsAPf/AQAGAAAAAAArAPf/AQAGAAAAAAAqAPf/AQAGAAAAAAAsAPb/AQAGAAAAAAAtAPb/AQAGAAAAAAAdAP7/AQAAAAAAAAAeAP3/AQAAAAAAAAAeAPz/AQAAAAAAAAAgAPv/AQAAAAAAAAAgAPr/AQAAAAAAAAAhAPr/AQAAAAAAAAAhAPv/AQAAAAAAAAAgAPz/AQAAAAAAAAASAO//AQAGAAAAAAATAO//AQAGAAAAAAAUAO//AQAGAAAAAAAVAO//AQAGAAAAAAAWAO//AQAGAAAAAAAXAO//AQAGAAAAAAAYAO//AQAGAAAAAAAZAO//AQAGAAAAAAAaAO//AQAGAAAAAAAbAO//AQAGAAAAAAAcAO//AQAGAAAAAAAdAO//AQAGAAAAAAAeAO//AQAGAAAAAAAhAPH/AQAGAAAAAAAiAPH/AQAGAAAAAAAkAPL/AQAGAAAAAAAlAPL/AQAGAAAAAAAnAPP/AQAGAAAAAAAoAPP/AQAGAAAAAAApAPP/AQAGAAAAAAAqAPP/AQAGAAAAAAA=")
 tile_set = SubResource("TileSet_bk67b")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(67, -72)
-zoom = Vector2(2, 2)
+[node name="Moving Platform" parent="." instance=ExtResource("4_i8buk")]
+position = Vector2(337, -76)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Moving Platform"]
+libraries = {
+"": SubResource("AnimationLibrary_4q0b1")
+}
+autoplay = "platform"
 
 [node name="Player" parent="." instance=ExtResource("3_iaio1")]
-position = Vector2(-25, -33)
+position = Vector2(306, -105)
+
+[node name="Coin" parent="." instance=ExtResource("5_evvle")]
+position = Vector2(-21, -75)
+
+[node name="KillZone" parent="." instance=ExtResource("6_gguyc")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+position = Vector2(361, 19)
+shape = SubResource("RectangleShape2D_ivxwj")
+
+[node name="Enemy" parent="KillZone" instance=ExtResource("7_f1rht")]
+position = Vector2(340, -40)
